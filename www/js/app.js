@@ -26,12 +26,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
     var canvas = document.getElementById('tempCanvas');
     var context = canvas.getContext('2d');
 
-
-    var source = new Image();
-    source.src = $scope.baseImage;
-    canvas.width = source.width;
-    canvas.height = source.height;
-
     $scope.displayMeme = function () {
       var source = new Image();
       source.src = $scope.baseImage;
