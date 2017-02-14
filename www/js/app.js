@@ -4,7 +4,6 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
-
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,20 +21,24 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     $scope.baseImage = "img/image.jpg";
     $scope.image = $scope.baseImage;
-    $scope.textOverlay = "";
-
+    $scope.topText = "";
+    $scope.bottomText = "";
     var canvas = document.getElementById('tempCanvas');
     var context = canvas.getContext('2d');
 
-    $scope.createOverlay = function () {
 
+    var source = new Image();
+    source.src = $scope.baseImage;
+    canvas.width = source.width;
+    canvas.height = source.height;
+
+    console.log(canvas);
+
+    $scope.displayMeme = function () {
       var source = new Image();
       source.src = $scope.baseImage;
       canvas.width = source.width;
       canvas.height = source.height;
-
-      console.log(canvas);
-
       context.drawImage(source, 0, 0);
 
       context.font = "100px impact";
@@ -47,9 +50,12 @@ angular.module('starter', ['ionic', 'ngCordova'])
       context.textAlign = 'center';
       context.fillStyle = 'white';
 
-      context.fillText($scope.textOverlay, canvas.width / 2, canvas.height * 0.8);
+      context.fillText($scope.bottomText, canvas.width / 2, canvas.height * 0.9);
+      context.fillText($scope.topText, canvas.width / 2, canvas.height * 0.13);
 
       var imgURI = canvas.toDataURL();
+
+      console.log('sdfdsf', imgURI);
 
       $timeout(function () {
         $scope.image = imgURI;
@@ -79,5 +85,12 @@ angular.module('starter', ['ionic', 'ngCordova'])
       });
     }
 
+    $scope.savePicture = function () {
+      var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
+
+      window.location.href = image; // it will save locally
+    };
   });
+
+
