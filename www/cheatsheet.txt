@@ -7,4 +7,37 @@
         </button>
       </div>
 
-      
+          $scope.savePicture = function () {
+      var filePath = "./something.jpg";
+      var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var params = {data: image, format: 'JPG', quality: 80};
+      window.imageSaver.saveBase64Image(params,
+        function (filePath) {
+          console.log('File saved on ' + filePath);
+        },
+        function (msg) {
+          console.error(msg);
+        }
+      );
+    }
+
+        $scope.takePicture = function () {
+      var options = {
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 300,
+        targetHeight: 300,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false
+      };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.baseImage = "data:image/jpeg;base64," + imageData;
+        $scope.image = $scope.baseImage;
+      }, function (err) {
+        // An error occured. Show a message to the user
+      });
+    }
