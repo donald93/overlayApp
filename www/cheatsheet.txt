@@ -1,0 +1,10 @@
+      <div class="row">
+        <button ng-click="savePicture()" class="button button-full button-balanced" style="margin: 10px">
+                  Save Picture!
+        </button>
+        <button ng-click="takePicture()" class="button button-full button-dark" style="margin: 10px">
+          Take Picture <i class="ion-ios-camera icon"></i>
+        </button>
+      </div>
+
+      
