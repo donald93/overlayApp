@@ -32,8 +32,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
     canvas.width = source.width;
     canvas.height = source.height;
 
-    console.log(canvas);
-
     $scope.displayMeme = function () {
       var source = new Image();
       source.src = $scope.baseImage;
@@ -55,12 +53,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
       var imgURI = canvas.toDataURL();
 
-      console.log('sdfdsf', imgURI);
-
       $timeout(function () {
         $scope.image = imgURI;
       }, 200);
 
+      $scope.href = canvas.toDataURL();
 
     };
 
@@ -85,12 +82,28 @@ angular.module('starter', ['ionic', 'ngCordova'])
       });
     }
 
-    $scope.savePicture = function () {
+    $scope.savePicture1 = function () {
       var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
 
       window.location.href = image; // it will save locally
     };
+
+    $scope.savePicture = function () {
+      var filePath = "./something.jpg";
+      var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+      var params = {data: image, format: 'JPG', quality: 80};
+      window.imageSaver.saveBase64Image(params,
+        function (filePath) {
+          console.log('File saved on ' + filePath);
+        },
+        function (msg) {
+          console.error(msg);
+        }
+      );
+    }
+
+
   });
 
 
